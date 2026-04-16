@@ -4,7 +4,7 @@ A lightweight terminal interface for managing local data and (eventually) commun
 
 ## About
 
-TerminalOne is a CLI-based management layer that sits on top of operating systems. Currently in early development, it provides a clean interface for system commands, note-taking, and message storage – with plans to support distributed communication between devices (Desktop and Field editions).
+TerminalOne is a CLI-based management layer that sits on top of operating systems. Currently in very  early development, it provides a clean interface for system commands, note-taking, and message storage – with plans to support distributed communication between devices (Desktop and Field editions).
 
 Inspired by Armbian's simple, functional CLI design.
 
