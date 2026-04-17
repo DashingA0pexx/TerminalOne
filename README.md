@@ -22,7 +22,7 @@ Inspired by Armbian's simple, functional CLI design.
 ## Installation
 
 1. Clone this repo
-2. Install Python 3.12+
+2. Install Python 3.12+ (If not pre-installed)
 3. Run: `python TerminalOne.py`
 4. Login with:
    - Username: `DashingA0pex`
