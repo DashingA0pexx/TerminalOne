@@ -42,7 +42,7 @@ logout        # Exit TerminalOne
 
 ## Roadmap
 
-- [ ] Multi-user support
+- [✓] Multi-user support
 - [ ] Linux compatibility
 - [ ] Field Edition (for SBCs)
 - [ ] Networking between devices
