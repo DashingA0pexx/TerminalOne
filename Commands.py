@@ -14,6 +14,7 @@ import platform
 import pathlib
 import Data_manager
 import User_manager
+import randfacts
 
 # BASIC COMMANDS
 
@@ -48,6 +49,7 @@ def say(*args):
         print(text)
     else:
         print("Usage: say <text>")
+
 
 def whereami():
     """Show current working directory"""
@@ -268,3 +270,10 @@ def color5_old():
         os.system('color 6F')
     else:
         print("Color commands only work on Windows")
+
+
+#Fun stuff/Easter eggs
+
+def funfact():
+    fact = randfacts.get_fact()
+    print(fact)
