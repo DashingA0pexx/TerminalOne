@@ -4,13 +4,16 @@
 # See LICENSE file for details
 
 #THIS is Commands.py, which contains all the commands for TerminalOne. This is imported into Home.py and used there.
+from ast import arg
 import os
+from pydoc import text
 import sys
 import time
 import Login
 import platform
 import pathlib
 import Data_manager
+import User_manager
 
 # BASIC COMMANDS
 
@@ -26,7 +29,8 @@ def commands():
     print("- sysinfo: Show system information (username, OS, Python version)")
     print("- whereami: Show current working directory")
     print("- viewfiles: Show files within the TerminalOne directory/folder")
-    print("")
+    print("- say: Print text to the screen (like echo in Linux)")
+    print("- whoami: Show the current logged-in user")
     print("===== FILE AND NOTE COMMANDS: =====")
     print('- savenote "note": Save a note to notes.json (e.g. savenote "This is a note")')
     print("- loadnote: Load and display all saved notes")
@@ -36,6 +40,14 @@ def commands():
 
     print("===== TO BE ADDED: =====")
     print("- honesty: shows what's happening in the background of TerminalOne (for debugging)")
+
+def say(*args):
+    """Print text to the screen (echo equivalent)"""
+    if args:
+        text = " ".join(args)
+        print(text)
+    else:
+        print("Usage: say <text>")
 
 def whereami():
     """Show current working directory"""
@@ -58,6 +70,14 @@ def sysinfo():
     print("Current Working Directory:" + os.getcwd())
     print("Python Version: " + sys.version)
     print("Operating System: " + " " + platform.system())
+
+def whoami():
+    #Show current logged-in user
+    current_user = Data_manager.get_current_user()
+    if current_user:
+        print(f"Current user: {current_user}")
+    else:
+        print("No user logged in.")
 
 
 #   FILE COMMANDS
@@ -110,7 +130,7 @@ def loadmessage(*args):
         print("No messages saved yet.")
 
 def openfile():
-    """Open and display a file from the data folder"""
+ #Opens and display a file from the data folder
     data_folder = "data"
     try:
         files = [f for f in os.listdir(data_folder) if os.path.isfile(os.path.join(data_folder, f))]
@@ -130,7 +150,6 @@ def openfile():
             print(file.read())
     except FileNotFoundError:
         print("Data folder not found. Login first to create it.")
-
 
 
 # LOGO COMMANDS

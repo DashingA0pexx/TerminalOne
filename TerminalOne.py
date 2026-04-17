@@ -10,6 +10,7 @@ import Home
 import os
 import keyboard 
 import Data_manager
+import User_manager
 
 # Main entry point for TerminalOne or THE LOGIN/SIGN-UP THINGGG
 # -DashingA0pex
@@ -22,6 +23,7 @@ def main():
         print("TerminalOne v1.0")
         print("=" * 50)
         print("Press Enter to login")
+        print("Press 'r' to register")
         print("Press 'q' to quit")
 
         # HERE is the choice. the > thing after an input like "> i <3 Linus Torvalds" basically the input thing in ALOT of CLIs
@@ -30,18 +32,26 @@ def main():
 
         # Gets you to Login.py to begin the login sequence
         if user_choice == '' or user_choice == 'enter':
-            if Login.perform_login():
-                Home.run_home()
+            username = Login.perform_login()
+            if username:
+                Home.run_home(username)
                 os.system('cls' if os.name == 'nt' else 'clear')
                 print("\nReturning to main menu...")
             else:
                 print("Login failed. Try again.")
+        
+        # New registration option
+        elif user_choice == 'r':
+            if Login.perform_registration():
+                print("Registration successful! You can now login.")
+                time.sleep(2)
+            os.system('cls' if os.name == 'nt' else 'clear')
 
         # A special feature for me that I made because typing in my credentials abunch of times was annoying
         elif user_choice == 'debug':  # ADD THIS
             print("Skipping login...")
-            Data_manager.initialize_default_files()  # ADD THIS
-            Home.run_home()  # ADD THIS
+            Data_manager.set_current_user("DashingA0pex")
+            Home.run_home("DashingA0pex")  # ADD THIS
             os.system('cls' if os.name == 'nt' else 'clear')
             print("\nReturning to main menu...")
 

@@ -8,9 +8,11 @@ import sys
 import time
 import Login
 import Commands
+import Data_manager
 
 
-def run_home():
+def run_home(username):
+    """Run the home screen for the logged-in user"""
     print(
         ''' 
 TerminalOne
@@ -27,13 +29,16 @@ See LICENSE file for details
   / / /  __/ /  / / / / / / / / / / /_/ / / /_/ / / / /  __/     
  /_/  \___/_/  /_/ /_/ /_/_/_/ /_/\__,_/_/\____/_/ /_/\___/      
 """)
-    print("\nWelcome to the Home Screen!")
+    print(f"\nWelcome to the Home Screen, {username}!")
     print("This is where you can access your terminal commands and features.")
     time.sleep(0.5)
     print('Type "commands" for a list of available commands, or "logout" to exit.')
     
+    # Initialize default files for this user on first run
+    Data_manager.initialize_default_files()
+    
     while True:
-        line = input(Login.Username + "@TerminalOne $> ").strip()
+        line = input(username + "@TerminalOne $> ").strip()
         
         # Ignore blank lines
         if not line:

@@ -12,6 +12,19 @@ import sys
 import json
 import pathlib
 import shutil
+import User_manager
+
+# Track current logged-in user
+current_user = None
+
+def set_current_user(username):
+    """Set the currently logged-in user"""
+    global current_user
+    current_user = username
+
+def get_current_user():
+    """Get the currently logged-in user"""
+    return current_user
 
 #To make the User's data folder where the user's stuff like files, notes, etc will be stored.
 #This is for when a user logs in for the first time, it will create a folder for them to store their data in.
@@ -20,30 +33,47 @@ import shutil
 def create_data_folder():
     if not os.path.exists("data"):
         os.makedirs("data", exist_ok=True)
-        print("Data folder created successfully.")
-    else:
-        print("Data folder already exists.")
 
 def load_json(filename):
-    with open(f"data/{filename}", "r") as file:
+    """Load JSON file from current user's folder"""
+    if current_user is None:
+        raise RuntimeError("No user logged in!")
+    
+    user_path = User_manager.get_user_data_path(current_user)
+    filepath = f"{user_path}/{filename}"
+    
+    with open(filepath, "r") as file:
         data = json.load(file)
     return data
 
 def save_json(filename, data):
-    with open(f"data/{filename}", "w") as file:
+    """Save JSON file to current user's folder"""
+    if current_user is None:
+        raise RuntimeError("No user logged in!")
+    
+    user_path = User_manager.get_user_data_path(current_user)
+    filepath = f"{user_path}/{filename}"
+    
+    with open(filepath, "w") as file:
         json.dump(data, file)
 
 def initialize_default_files():
-    """Create default JSON files if they don't exist"""
+    """Create default JSON files for current user if they don't exist"""
     create_data_folder()
+    
+    if current_user is None:
+        raise RuntimeError("No user logged in!")
+    
+    user_path = User_manager.get_user_data_path(current_user)
     
     default_files = {
         "messages.json": {"messages": []},
         "notes.json": {"notes": []},
-        "settings.json": {"theme": "classic", "username": "DashingA0pex"}
+        "settings.json": {"theme": "classic", "username": current_user}
     }
     
     for filename, default_data in default_files.items():
-        if not os.path.exists(f"data/{filename}"):
-            save_json(filename, default_data)
-            print(f"{filename} created with defaults.")
+        filepath = f"{user_path}/{filename}"
+        if not os.path.exists(filepath):
+            with open(filepath, "w") as file:
+                json.dump(default_data, file)
